@@ -102,4 +102,14 @@ public class MusicasController {
 		this.repmusicas.add(new Musica(id, nome, artista, duracao, path, tam));
 		this.salvarXML();
 	}
+	
+	public Musica getMusica(int id) {
+		Musica musica = null;
+		Musica atual;
+		for(int i = 0; i < this.repmusicas.size(); i++) {
+			atual = this.repmusicas.get(i);
+			if (atual.getId() == id) musica = atual;
+		}
+		return musica;
+	}
 }

@@ -26,6 +26,9 @@ public class LogadoFrame {
 	private DefaultTableModel model;
 	private JComboBox comboBox;
 	private JTable table;
+	private int musicaselecionada;
+	private JButton btnBaixar;
+	private ArrayList<Musica> musicas;
 
 	/**
 	 * Launch the application.
@@ -37,6 +40,7 @@ public class LogadoFrame {
 	public LogadoFrame(Cliente cliente, LoginFrame login) {
 		this.cliente = cliente;
 		this.login = login;
+		this.musicaselecionada = -1;
 		initialize();
 		this.frame.setVisible(true);
 	}
@@ -51,7 +55,7 @@ public class LogadoFrame {
 		frame.getContentPane().setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(27, 63, 696, 476);
+		tabbedPane.setBounds(27, 63, 696, 525);
 		frame.getContentPane().add(tabbedPane);
 		
 		JPanel panel = new JPanel();
@@ -100,6 +104,19 @@ public class LogadoFrame {
 		table.setAutoCreateRowSorter(true);
 		
 		
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		        int row = table.rowAtPoint(evt.getPoint());
+		        int col = table.columnAtPoint(evt.getPoint());
+		        if (evt.getClickCount() == 1) {
+		        	if (row >= 0 && col >= 0) {
+		        		selecionamusica(String.valueOf(model.getValueAt(row, 0)));
+		        	}
+		        }
+		    }
+		});
+		
 		
 		table.getColumnModel().getColumn(0).setPreferredWidth(20);
 		table.getColumnModel().getColumn(1).setPreferredWidth(250);
@@ -111,6 +128,16 @@ public class LogadoFrame {
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		panel_2.add(scrollPane);
+		
+		btnBaixar = new JButton("Baixar");
+		btnBaixar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				baixarselecionada();
+			}
+		});
+		btnBaixar.setEnabled(false);
+		btnBaixar.setBounds(545, 449, 117, 25);
+		panel.add(btnBaixar);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Minhas músicas", null, panel_1, null);
@@ -132,6 +159,7 @@ public class LogadoFrame {
 	}
 	
 	public void procurar() {
+		this.btnBaixar.setEnabled(false);
 		int linhastabela = this.table.getRowCount();
 		for (int i = linhastabela - 1; i >= 0; i--) {
 		    this.model.removeRow(i);
@@ -141,9 +169,9 @@ public class LogadoFrame {
 		String mod = this.comboBox.getSelectedItem().toString();
 		ArrayList<Musica> musicas;
 		if(mod.equals("Nome")) {
-			musicas = this.cliente.procurarMusicaNome(busca);
+			this.musicas = musicas = this.cliente.procurarMusicaNome(busca);
 		} else {
-			musicas = this.cliente.procurarMusicaArtista(busca);
+			this.musicas = musicas = this.cliente.procurarMusicaArtista(busca);
 		}
 		Musica atual;
 		int minutos, segundos;
@@ -165,5 +193,27 @@ public class LogadoFrame {
 		else if(kb > 0) r = kb + " KB";
 		else r = tam + " Bytes";
 		return r;
+	}
+	
+	public void selecionamusica(String id) {
+		int idint = Integer.parseInt(id);
+		this.musicaselecionada = idint;
+		this.btnBaixar.setEnabled(true);
+	}
+	
+	public void baixarselecionada() {
+		new DownloadFrame(this.getMusica(this.musicaselecionada), this.cliente);
+	}
+	
+	private Musica getMusica(int id) {
+		Musica musica = null;
+		Musica atual = null;
+		for(int i = 0; i < this.musicas.size(); i++) {
+			atual = this.musicas.get(i);
+			if(atual.getId() == id) {
+				musica = atual;
+			}
+		}
+		return musica;
 	}
 }
