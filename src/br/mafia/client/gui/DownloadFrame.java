@@ -38,11 +38,11 @@ public class DownloadFrame {
 		frame.getContentPane().setLayout(null);
 		
 		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(68, 98, 322, 54);
+		progressBar.setBounds(68, 111, 322, 54);
 		frame.getContentPane().add(progressBar);
 		
 		lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(35, 25, 368, 61);
+		lblNewLabel.setBounds(35, 25, 389, 77);
 		frame.getContentPane().add(lblNewLabel);
 	}
 }
