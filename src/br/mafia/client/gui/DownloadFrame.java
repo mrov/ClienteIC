@@ -25,6 +25,7 @@ public class DownloadFrame {
 		this.cliente = cliente;
 		initialize();
 		this.frame.setVisible(true);
+		this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.lblNewLabel.setText("Baixando " + this.musica.getPath() + " em " + this.cliente.getPastaMusicas());
 	}
 

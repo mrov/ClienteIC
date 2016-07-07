@@ -54,6 +54,10 @@ public class Cliente {
 		this.musicas.addMusica(id, nome, artista, duracao, path, tam);
 	}
 	
+	public Musica getMusica(int id) {
+		return this.musicas.getMusica(id);
+	}
+	
 	// } </MUSICAS>
 	
 	// { <CONFIG>

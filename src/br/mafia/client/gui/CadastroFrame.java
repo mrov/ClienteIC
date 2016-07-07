@@ -33,6 +33,7 @@ public class CadastroFrame {
 		this.login = login;
 		initialize();
 		this.frame.setVisible(true);
+		this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	/**

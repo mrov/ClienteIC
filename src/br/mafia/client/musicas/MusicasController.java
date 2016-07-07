@@ -21,6 +21,7 @@ public class MusicasController {
 	public MusicasController(String arquivoxml) {
 		this.repmusicas = new ArrayList();
 		this.arquivoxml = arquivoxml;
+		this.lerXLM();
 	}
 	
 	private void salvarXML() {
