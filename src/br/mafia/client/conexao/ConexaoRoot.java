@@ -144,4 +144,41 @@ public class ConexaoRoot {
 		}
 		return musicas;
 	}
+	
+	public int geraIDdownload(int id) {
+		int id_download = 0;
+		try {
+			this.saida.write(48);
+			this.saida.write(id >> 8);
+			this.saida.write(id & 255);
+			id_download = this.entrada.read() << 8;
+			id_download = id_download | this.entrada.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return id_download;
+	}
+	
+	public void pauseDownload(int id) {
+		try {
+			this.saida.write(50);
+			this.saida.write(id >> 8);
+			this.saida.write(id & 255);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void cancelarDownload(int id) {
+		try {
+			this.saida.write(51);
+			this.saida.write(id >> 8);
+			this.saida.write(id & 255);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
