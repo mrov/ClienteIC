@@ -34,7 +34,7 @@ public class DownloadFrame implements JanelaDownload {
 		initialize();
 		this.frame.setVisible(true);
 		this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.lblNewLabel.setText("Baixando " + this.musica.getPath() + " em " + this.cliente.getPastaMusicas());
+		this.lblNewLabel.setText("<html>Baixando " + this.musica.getPath() + " em " + this.cliente.getPastaMusicas() + "</html>");
 		
 		btnPausar = new JButton("Pausar");
 		btnPausar.addActionListener(new ActionListener() {
@@ -46,6 +46,11 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(btnPausar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancelarDownload();
+			}
+		});
 		btnCancelar.setBounds(203, 199, 117, 25);
 		frame.getContentPane().add(btnCancelar);
 		this.id_download = this.cliente.iniciarDownload(musica, this);
@@ -78,10 +83,17 @@ public class DownloadFrame implements JanelaDownload {
 			this.btnPausar.setText("Pause");
 			this.pausado = false;
 			this.cliente.continuarDownload(this.id_download);
+			this.lblNewLabel.setText("<html>Baixando " + this.musica.getPath() + " em " + this.cliente.getPastaMusicas() + "</html>");
 		} else {
 			this.btnPausar.setText("Continuar");
 			this.pausado = true;
 			this.cliente.pausarDownload(this.id_download);
+			this.lblNewLabel.setText("Pausado");
 		}
+	}
+	
+	public void cancelarDownload() {
+		this.cliente.cancelarDownload(this.id_download);
+		this.frame.dispose();
 	}
 }
