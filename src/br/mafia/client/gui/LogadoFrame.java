@@ -172,7 +172,7 @@ public class LogadoFrame {
 				skip_b();
 			}
 		});
-		this.btnBack.setBounds(203, 36, 38, 38);
+		this.btnBack.setBounds(219, 36, 38, 38);
 		panel_1.add(this.btnBack);
 		
 		this.btnPlay = new JButton("");
@@ -182,7 +182,7 @@ public class LogadoFrame {
 				tocarMusica();
 			}
 		});
-		this.btnPlay.setBounds(251, 36, 38, 38);
+		this.btnPlay.setBounds(315, 36, 38, 38);
 		panel_1.add(this.btnPlay);
 		
 		this.btnPause = new JButton("");
@@ -192,7 +192,7 @@ public class LogadoFrame {
 				pause();
 			}
 		});
-		this.btnPause.setBounds(299, 36, 38, 38);
+		this.btnPause.setBounds(363, 36, 38, 38);
 		panel_1.add(this.btnPause);
 		
 		this.btnNewButton = new JButton("");
@@ -202,7 +202,7 @@ public class LogadoFrame {
 				stop();
 			}
 		});
-		this.btnNewButton.setBounds(347, 36, 38, 38);
+		this.btnNewButton.setBounds(267, 36, 38, 38);
 		panel_1.add(this.btnNewButton);
 		
 		this.btnFoward = new JButton("");
@@ -212,7 +212,7 @@ public class LogadoFrame {
 				skip_f();
 			}
 		});
-		this.btnFoward.setBounds(395, 36, 38, 38);
+		this.btnFoward.setBounds(411, 36, 38, 38);
 		panel_1.add(this.btnFoward);
 		
 		JPanel panel_3 = new JPanel();
