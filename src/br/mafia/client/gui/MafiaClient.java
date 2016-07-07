@@ -80,8 +80,8 @@ public class MafiaClient {
 	}
 	
 	public void abrir() {
-		cliente.setIPservidor("localhost");
-		cliente.setPortaServidor("8080");
+		cliente.setIPservidor(textField.getText());
+		cliente.setPortaServidor(textField_1.getText());
 		cliente.SalvarConfig();
 		this.frame.setVisible(false);
 		new LoginFrame(this.cliente);

@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import br.mafia.client.musicas.Musica;
 import jaco.mp3.player.MP3Player;
+import javax.swing.ImageIcon;
 
 public class LogadoFrame {
 
@@ -164,49 +165,54 @@ public class LogadoFrame {
 		tabbedPane.addTab("Minhas músicas", null, panel_1, null);
 		panel_1.setLayout(null);
 		
-		this.btnBack = new JButton("back");
+		this.btnBack = new JButton("");
+		btnBack.setIcon(new ImageIcon(LogadoFrame.class.getResource("/Frames/backm.png")));
 		this.btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				skip_b();
 			}
 		});
-		this.btnBack.setBounds(29, 36, 117, 25);
+		this.btnBack.setBounds(203, 36, 38, 38);
 		panel_1.add(this.btnBack);
 		
-		this.btnPlay = new JButton("play");
+		this.btnPlay = new JButton("");
+		btnPlay.setIcon(new ImageIcon(LogadoFrame.class.getResource("/Frames/playm.png")));
 		this.btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tocarMusica();
 			}
 		});
-		this.btnPlay.setBounds(164, 36, 117, 25);
+		this.btnPlay.setBounds(251, 36, 38, 38);
 		panel_1.add(this.btnPlay);
 		
-		this.btnPause = new JButton("pause");
+		this.btnPause = new JButton("");
+		btnPause.setIcon(new ImageIcon(LogadoFrame.class.getResource("/Frames/pausem.png")));
 		btnPause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pause();
 			}
 		});
-		this.btnPause.setBounds(299, 36, 117, 25);
+		this.btnPause.setBounds(299, 36, 38, 38);
 		panel_1.add(this.btnPause);
 		
-		this.btnNewButton = new JButton("stop");
+		this.btnNewButton = new JButton("");
+		btnNewButton.setIcon(new ImageIcon(LogadoFrame.class.getResource("/Frames/stopm.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stop();
 			}
 		});
-		this.btnNewButton.setBounds(428, 36, 117, 25);
+		this.btnNewButton.setBounds(347, 36, 38, 38);
 		panel_1.add(this.btnNewButton);
 		
-		this.btnFoward = new JButton("foward");
+		this.btnFoward = new JButton("");
+		btnFoward.setIcon(new ImageIcon(LogadoFrame.class.getResource("/Frames/fowardm.png")));
 		this.btnFoward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				skip_f();
 			}
 		});
-		this.btnFoward.setBounds(557, 36, 117, 25);
+		this.btnFoward.setBounds(395, 36, 38, 38);
 		panel_1.add(this.btnFoward);
 		
 		JPanel panel_3 = new JPanel();
