@@ -42,6 +42,18 @@ public class Cliente {
 		return this.root.procuraMusica(busca, 33);
 	}
 	
+	public int geraIDdownload(Musica musica) {
+		return this.root.geraIDdownload(musica.getId());
+	}
+	
+	public void anunciaPause(int id) {
+		this.root.pauseDownload(id);
+	}
+	
+	public void anunciaCancelamento(int id) {
+		this.root.cancelarDownload(id);
+	}
+	
 	// } </ROOT>
 	
 	// { <MUSICAS>
