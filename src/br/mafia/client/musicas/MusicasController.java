@@ -99,7 +99,7 @@ public class MusicasController {
 		return this.repmusicas;
 	}
 	
-	public void addMusica(int id, String nome, String artista, int duracao, String path, int tam) {
+	public void addMusica(int id, String nome, String artista, int duracao, String path,long tam) {
 		this.repmusicas.add(new Musica(id, nome, artista, duracao, path, tam));
 		this.salvarXML();
 	}
