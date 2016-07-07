@@ -1,5 +1,6 @@
 package br.mafia.client.program;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,7 @@ public class Download_cliente extends Thread{
 		this.byte_init = byte_init;
 		this.directory = directory;
 		this.path = path;
-		this.caminho = this.directory + "/" + this.path;
+		this.caminho = this.directory + File.separator + this.path;
 		pause=0;
 		this.client = client;
 		this.nome = nome;
