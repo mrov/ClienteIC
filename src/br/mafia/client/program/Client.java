@@ -34,10 +34,6 @@ public class Client {
 		this.port = port;
 		logado = false;
 		this.client = new Cliente();
-
-		directory = "/home/CIN/vrm";
-		path="musica.mp3";
-		id_musica = 1;
 		byte_init = 0;
 	}
 
@@ -318,7 +314,7 @@ public class Client {
 	public void setTam(int tam){
 		this.tam = tam;
 	}
-	//
+
 	// public void setBitInit(int bit_init){
 	// 	this.byte_init = bit_init;
 	// }
