@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class DownloadFrame implements JanelaDownload {
 
@@ -20,6 +21,7 @@ public class DownloadFrame implements JanelaDownload {
 	private int id_download;
 	private boolean pausado;
 	private JButton btnPausar;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -53,6 +55,11 @@ public class DownloadFrame implements JanelaDownload {
 		});
 		btnCancelar.setBounds(203, 199, 117, 25);
 		frame.getContentPane().add(btnCancelar);
+		
+		this.lblNewLabel_1 = new JLabel("");
+		this.lblNewLabel_1.setBounds(68, 276, 322, 65);
+		this.lblNewLabel_1.setForeground(Color.RED);
+		frame.getContentPane().add(this.lblNewLabel_1);
 		this.id_download = this.cliente.iniciarDownload(musica, this);
 	}
 
@@ -61,7 +68,7 @@ public class DownloadFrame implements JanelaDownload {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 450, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -95,5 +102,9 @@ public class DownloadFrame implements JanelaDownload {
 	public void cancelarDownload() {
 		this.cliente.cancelarDownload(this.id_download);
 		this.frame.dispose();
+	}
+	
+	public void alertaErro(String erro) {
+		this.lblNewLabel.setText("<html>" + erro + "<html>");
 	}
 }
