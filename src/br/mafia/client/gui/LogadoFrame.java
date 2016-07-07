@@ -41,8 +41,9 @@ public class LogadoFrame {
 	private JButton btnBack;
 	private JButton btnPlay;
 	private JButton btnPause;
-	private JButton btnNewButton;
+	private JButton btnStop;
 	private JButton btnFoward;
+	private JButton[] botoes = {btnBack,btnPause,btnStop,btnFoward};
 
 	/**
 	 * Launch the application.
@@ -60,11 +61,13 @@ public class LogadoFrame {
 		this.mp = new MP3Player();
 		this.frame.setVisible(true);
 		this.loadMusicas();
+		JButton[] botoes = {btnBack,btnPause,btnStop,btnFoward};
 		this.btnBack.setEnabled(false);
-		this.btnPlay.setEnabled(false);
+		this.btnPlay.setEnabled(true);
 		this.btnPause.setEnabled(false);
-		this.btnNewButton.setEnabled(false);
+		this.btnStop.setEnabled(false);
 		this.btnFoward.setEnabled(false);
+		
 	}
 
 	/**
@@ -172,7 +175,7 @@ public class LogadoFrame {
 				skip_b();
 			}
 		});
-		this.btnBack.setBounds(219, 36, 38, 38);
+		this.btnBack.setBounds(219, 36, 45, 45);
 		panel_1.add(this.btnBack);
 		
 		this.btnPlay = new JButton("");
@@ -182,7 +185,7 @@ public class LogadoFrame {
 				tocarMusica();
 			}
 		});
-		this.btnPlay.setBounds(315, 36, 38, 38);
+		this.btnPlay.setBounds(315, 36, 45, 45);
 		panel_1.add(this.btnPlay);
 		
 		this.btnPause = new JButton("");
@@ -192,18 +195,18 @@ public class LogadoFrame {
 				pause();
 			}
 		});
-		this.btnPause.setBounds(363, 36, 38, 38);
+		this.btnPause.setBounds(363, 36, 45, 45);
 		panel_1.add(this.btnPause);
 		
-		this.btnNewButton = new JButton("");
-		btnNewButton.setIcon(new ImageIcon(LogadoFrame.class.getResource("/Frames/stopm.png")));
-		btnNewButton.addActionListener(new ActionListener() {
+		this.btnStop = new JButton("");
+		btnStop.setIcon(new ImageIcon(LogadoFrame.class.getResource("/Frames/stopm.png")));
+		btnStop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				stop();
 			}
 		});
-		this.btnNewButton.setBounds(267, 36, 38, 38);
-		panel_1.add(this.btnNewButton);
+		this.btnStop.setBounds(267, 36, 45, 45);
+		panel_1.add(this.btnStop);
 		
 		this.btnFoward = new JButton("");
 		btnFoward.setIcon(new ImageIcon(LogadoFrame.class.getResource("/Frames/fowardm.png")));
@@ -212,7 +215,7 @@ public class LogadoFrame {
 				skip_f();
 			}
 		});
-		this.btnFoward.setBounds(411, 36, 38, 38);
+		this.btnFoward.setBounds(411, 36, 45, 45);
 		panel_1.add(this.btnFoward);
 		
 		JPanel panel_3 = new JPanel();
@@ -368,22 +371,45 @@ public class LogadoFrame {
 	public void selecionaLinha(int linha) {
 		this.linhaselecionada = linha;
 		this.btnBack.setEnabled(true);
-		this.btnPlay.setEnabled(true);
+		this.btnPlay.setEnabled(false);
 		this.btnPause.setEnabled(true);
-		this.btnNewButton.setEnabled(true);
+		this.btnStop.setEnabled(true);
 		this.btnFoward.setEnabled(true);
 	}
 	
 	public void tocarMusica() {
-		this.mp.stop();
-		String path = String.valueOf(model_2.getValueAt(this.linhaselecionada, 0));
-    	this.mp = new MP3Player(new File(this.cliente.getPastaMusicas() + File.separator + path));
-    	this.reproduzindo = this.linhaselecionada;
-    	int linhastabela = this.table_2.getRowCount();
-    	for(int i = 0; i < linhastabela; i++) {
-    		this.mp.addToPlayList(new File(this.cliente.getPastaMusicas() + File.separator + String.valueOf(model_2.getValueAt(i, 0))));
+		if(mp.isStopped()){
+			btnPlay.setEnabled(false);
+			btnStop.setEnabled(true);
+			btnPause.setEnabled(true);
+			btnBack.setEnabled(true);
+			btnFoward.setEnabled(true);
+			linhaselecionada = 0;
+			String path = String.valueOf(model_2.getValueAt(0, 0));
+			this.mp = new MP3Player(new File(this.cliente.getPastaMusicas() + File.separator + path));
+			this.reproduzindo = this.linhaselecionada;
+			int linhastabela = this.table_2.getRowCount();
+			for(int i = 0; i < linhastabela; i++) {
+				this.mp.addToPlayList(new File(this.cliente.getPastaMusicas() + File.separator + String.valueOf(model_2.getValueAt(i, 0))));
     	}
-    	this.mp.play();
+			this.mp.play();
+		}
+    	else if(mp.isPaused()){
+    		mp.play();
+    		btnPause.setEnabled(true);
+    		btnPlay.setEnabled(false);
+    	}
+    	else if(!mp.isStopped() || !mp.isPaused()){
+    		mp.stop();
+			String path = String.valueOf(model_2.getValueAt(linhaselecionada, 0));
+			this.mp = new MP3Player(new File(this.cliente.getPastaMusicas() + File.separator + path));
+			this.reproduzindo = this.linhaselecionada;
+			int linhastabela = this.table_2.getRowCount();
+			for(int i = 0; i < linhastabela; i++) {
+				this.mp.addToPlayList(new File(this.cliente.getPastaMusicas() + File.separator + String.valueOf(model_2.getValueAt(i, 0))));
+			}
+			mp.play();
+		}
 	}
 	
 	public void skip_b() {
@@ -396,6 +422,7 @@ public class LogadoFrame {
 		}
 	}
 	
+	
 	public void skip_f() {
 		int linhastabela = this.table_2.getRowCount();
 		if(linhastabela > 0) {
@@ -407,9 +434,16 @@ public class LogadoFrame {
 	
 	public void stop() {
 		this.mp.stop();
+		btnStop.setEnabled(false);
+		btnPlay.setEnabled(true);
+		btnPause.setEnabled(false);
+		btnBack.setEnabled(false);
+		btnFoward.setEnabled(false);
 	}
 	
 	public void pause() {
 		this.mp.pause();
+		btnPause.setEnabled(false);
+		btnPlay.setEnabled(true);
 	}
 }
