@@ -77,6 +77,7 @@ public class Download_cliente extends Thread{
 					}
 				}
 				if (cancelado){
+					download.close();
 					System.out.println("Download " + id_download + " cancelado");
 					File arquivo = new File(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath());
 					this.guidownload.setStatusDownload((int)((float)byte_init/tamanho_arquivo*1000), "0 s", "0 KB/s");
