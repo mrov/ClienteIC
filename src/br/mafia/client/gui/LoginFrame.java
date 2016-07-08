@@ -109,6 +109,7 @@ public class LoginFrame {
 			this.cliente.login(this.textField.getText(), this.passwordField.getText());
 			
 			new LogadoFrame(this.cliente, this);
+			this.frame.setVisible(false);
 			
 		} catch (FalhaLoginException e) {
 			JOptionPane.showMessageDialog(frame, "Usuário ou senha incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
