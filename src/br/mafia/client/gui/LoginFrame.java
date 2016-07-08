@@ -17,7 +17,7 @@ import java.awt.event.KeyEvent;
 
 public class LoginFrame {
 
-	private JFrame frame;
+	public JFrame frame;
 	private Cliente cliente;
 	private JTextField textField;
 	private JPasswordField passwordField;
@@ -125,6 +125,7 @@ public class LoginFrame {
 	
 	public void cadastro() {
 		new CadastroFrame(this.cliente, this);
+		this.frame.setVisible(false);
 	}
 	
 	public void setText(String usuario, String senha) {

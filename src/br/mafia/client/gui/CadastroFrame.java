@@ -105,6 +105,7 @@ public class CadastroFrame {
 			JOptionPane.showMessageDialog(frame, "Cadastrado com sucesso!");
 			this.login.setText(this.textField.getText(), this.passwordField.getText());
 			this.frame.setVisible(false);
+			this.login.frame.setVisible(true);
 		} catch (UsuarioJaCadastradoException e) {
 			JOptionPane.showMessageDialog(frame, "Usuário já cadastraro", "Erro", JOptionPane.ERROR_MESSAGE);
 		}catch (Exception e) {
