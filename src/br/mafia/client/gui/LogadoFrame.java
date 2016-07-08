@@ -21,6 +21,8 @@ import javax.swing.table.DefaultTableModel;
 import br.mafia.client.musicas.JanelaPlayer;
 import br.mafia.client.musicas.Musica;
 import jaco.mp3.player.MP3Player;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LogadoFrame implements JanelaPlayer {
 
@@ -89,6 +91,14 @@ public class LogadoFrame implements JanelaPlayer {
 		panel.setLayout(null);
 		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				     procurar();
+				}
+			}
+		});
 		textField.setBounds(29, 34, 305, 19);
 		panel.add(textField);
 		textField.setColumns(10);

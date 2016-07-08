@@ -11,6 +11,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import br.mafia.client.conexao.FalhaLoginException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginFrame {
 
@@ -48,11 +50,27 @@ public class LoginFrame {
 		frame.getContentPane().add(lblSenha);
 		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				     login();
+				}
+			}
+		});
 		textField.setBounds(133, 59, 160, 19);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		passwordField = new JPasswordField();
+		passwordField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				     login();
+				}
+			}
+		});
 		passwordField.setBounds(133, 88, 160, 19);
 		frame.getContentPane().add(passwordField);
 		

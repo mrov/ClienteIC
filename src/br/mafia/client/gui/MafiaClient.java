@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MafiaClient {
 
@@ -60,11 +62,27 @@ public class MafiaClient {
 		frame.getContentPane().add(lblPorta);
 		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				     abrir();
+				}
+			}
+		});
 		textField.setBounds(163, 74, 212, 19);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				     abrir();
+				}
+			}
+		});
 		textField_1.setBounds(163, 109, 83, 19);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
