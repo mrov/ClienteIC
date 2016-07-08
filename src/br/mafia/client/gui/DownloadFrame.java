@@ -74,7 +74,6 @@ public class DownloadFrame implements JanelaDownload {
 				cancelarDownload();
 			}
 		});
-		btnCancelar.setBounds(203, 199, 117, 25);
 		frame.getContentPane().add(btnCancelar);
 		
 		this.lblNewLabel_1 = new JLabel("");
@@ -134,6 +133,6 @@ public class DownloadFrame implements JanelaDownload {
 	}
 	
 	public void alertaErro(String erro) {
-		this.lblNewLabel.setText("<html>" + erro + "<html>");
+		this.lblNewLabel_1.setText("<html>" + erro + "<html>");
 	}
 }

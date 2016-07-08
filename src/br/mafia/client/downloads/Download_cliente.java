@@ -35,6 +35,7 @@ public class Download_cliente extends Thread{
 		try {
 			if (pause == 0 && !Thread.currentThread().isInterrupted()){
 				Socket socket = new Socket(this.cliente.getIPservidor(), Integer.parseInt(this.cliente.getPortaServidor()));
+				socket.setSoTimeout(1000);
 				OutputStream saida_t = socket.getOutputStream();
 				InputStream entrada_t = socket.getInputStream();
 				saida_t.write(49);
@@ -104,6 +105,7 @@ public class Download_cliente extends Thread{
 					this.guidownload.alertaErro("Erro no download, tentando reconectar em: " + (10 - i) + " segundos");
 					Thread.sleep(1000);
 				}
+				this.cliente.continuarDownload(this.id_download);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
