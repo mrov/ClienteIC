@@ -23,6 +23,7 @@ public class LoginFrame {
 	private JPasswordField passwordField;
 	private JButton btnLogin;
 	private JButton btnNewButton;
+	private boolean login_enter_fix;
 
 	/**
 	 * Create the application.
@@ -31,6 +32,7 @@ public class LoginFrame {
 		this.cliente = cliente;
 		initialize();
 		this.frame.setVisible(true);
+		login_enter_fix = false;
 	}
 
 	/**
@@ -55,7 +57,10 @@ public class LoginFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-				     login();
+				    if (!login_enter_fix) {
+				    	login();
+				    	login_enter_fix = true;
+				    } else login_enter_fix = false;
 				}
 			}
 		});
@@ -68,7 +73,10 @@ public class LoginFrame {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-				     login();
+					if (!login_enter_fix) {
+				    	login();
+				    	login_enter_fix = true;
+				    } else login_enter_fix = false;
 				}
 			}
 		});
@@ -95,15 +103,20 @@ public class LoginFrame {
 	}
 	
 	public void login() {
+		
 		try {
+			
 			this.cliente.login(this.textField.getText(), this.passwordField.getText());
-			this.frame.setVisible(false);
+			
 			new LogadoFrame(this.cliente, this);
+			
 		} catch (FalhaLoginException e) {
 			JOptionPane.showMessageDialog(frame, "Usuário ou senha incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
+			
 		} catch (Exception e) {
 			if(e instanceof ConnectException){
 				JOptionPane.showMessageDialog(frame, "Verifique a sua conexão com a internet", "Erro", JOptionPane.ERROR_MESSAGE);
+			
 			}
 			// TODO: handle exception
 		}
