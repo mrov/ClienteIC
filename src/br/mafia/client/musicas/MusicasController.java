@@ -102,8 +102,9 @@ public class MusicasController {
 	}
 	
 	public void addMusica(int id, String nome, String artista, int duracao, String path,long tam) {
-		this.repmusicas.add(new Musica(id, nome, artista, duracao, path, tam));
-		this.janela.addMusica(path, nome, artista, String.valueOf(duracao));
+		Musica nova = new Musica(id, nome, artista, duracao, path, tam);
+		this.repmusicas.add(nova);
+		this.janela.addMusica(nova);
 		this.salvarXML();
 	}
 	

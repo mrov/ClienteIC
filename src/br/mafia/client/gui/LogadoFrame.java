@@ -356,17 +356,15 @@ public class LogadoFrame implements JanelaPlayer {
 	
 	public void loadMusicas() {
 		ArrayList<Musica> musicas = this.cliente.getMusicasDisponiveis();
-		Musica atual; int min, sec;
 		for(int i = 0; i < musicas.size(); i++) {
-			atual = musicas.get(i);
-			min = atual.getDuracao() / 60;
-			sec = atual.getDuracao() % 60;
-			addMusica(atual.getPath(), atual.getNome(), atual.getArtista(), min + ":" + sec);
+			addMusica(musicas.get(i));
 		}
 	}
 	
-	public void addMusica(String path, String nome, String artista, String duracao) {
-		this.model_2.addRow(new Object[]{path, nome, artista, duracao});
+	public void addMusica(Musica musica) {
+		int min = musica.getDuracao() / 60;
+		int sec = musica.getDuracao() % 60;
+		this.model_2.addRow(new Object[]{musica.getPath(), musica.getNome(), musica.getArtista(), min + ":" + sec});
 	}
 	
 	public void selecionaLinha(int linha) {
