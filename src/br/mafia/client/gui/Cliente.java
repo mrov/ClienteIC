@@ -26,6 +26,9 @@ public class Cliente {
 	}
 	
 	// { <ROOT>
+	public void reconectar(){
+		this.root.reconectar();
+	}
 	
 	public void cadastrar(String usuario, String senha) throws UsuarioJaCadastradoException, Exception {
 		this.root.cadastro(usuario, senha);

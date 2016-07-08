@@ -64,7 +64,7 @@ public class ConexaoRoot {
 				throw new FalhaLoginException();
 			}
 			System.out.println("r == 16");
-			new Thread(new Ping(this.socket)).start();
+			new Thread(new Ping(this.socket,this.cliente)).start();
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,6 +81,29 @@ public class ConexaoRoot {
 			this.entrada.close();
 			this.saida.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void reconectar(){
+		try {
+			Thread.currentThread().sleep(6000);
+			this.socket = new Socket(this.cliente.getIPservidor(),Integer.parseInt(this.cliente.getPortaServidor()));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			if (e instanceof ConnectException){
+				System.out.println("conexão caiu");
+				this.reconectar();
+			}
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

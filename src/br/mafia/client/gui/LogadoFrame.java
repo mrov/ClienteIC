@@ -388,7 +388,10 @@ public class LogadoFrame implements JanelaPlayer {
 	}
 	
 	public void tocarMusica() {
-		if(mp.isStopped()){
+		
+		if(this.model_2.getRowCount()<=0){
+			JOptionPane.showMessageDialog(frame, "Você não tem nenhuma musica disponivel", "Aviso", JOptionPane.WARNING_MESSAGE);
+		} else if(mp.isStopped()){
 			btnPlay.setEnabled(false);
 			btnStop.setEnabled(true);
 			btnPause.setEnabled(true);
