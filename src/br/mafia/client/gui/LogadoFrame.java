@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,11 +18,13 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import br.mafia.client.musicas.JanelaPlayer;
 import br.mafia.client.musicas.Musica;
 import jaco.mp3.player.MP3Player;
-import javax.swing.ImageIcon;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-public class LogadoFrame {
+public class LogadoFrame implements JanelaPlayer {
 
 	private JFrame frame;
 	private Cliente cliente;
@@ -67,7 +70,7 @@ public class LogadoFrame {
 		this.btnPause.setEnabled(false);
 		this.btnStop.setEnabled(false);
 		this.btnFoward.setEnabled(false);
-		
+		this.cliente.setJanelaPlayer(this);
 	}
 
 	/**
@@ -88,6 +91,14 @@ public class LogadoFrame {
 		panel.setLayout(null);
 		
 		textField = new JTextField();
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+				     procurar();
+				}
+			}
+		});
 		textField.setBounds(29, 34, 305, 19);
 		panel.add(textField);
 		textField.setColumns(10);
@@ -126,7 +137,7 @@ public class LogadoFrame {
 		
 		table = new JTable(this.model);
 		table.setFillsViewportHeight(true);
-		table.setAutoCreateRowSorter(true);
+		table.setAutoCreateRowSorter(false);
 		
 		
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -356,17 +367,15 @@ public class LogadoFrame {
 	
 	public void loadMusicas() {
 		ArrayList<Musica> musicas = this.cliente.getMusicasDisponiveis();
-		Musica atual; int min, sec;
 		for(int i = 0; i < musicas.size(); i++) {
-			atual = musicas.get(i);
-			min = atual.getDuracao() / 60;
-			sec = atual.getDuracao() % 60;
-			addMusica(atual.getPath(), atual.getNome(), atual.getArtista(), min + ":" + sec);
+			addMusica(musicas.get(i));
 		}
 	}
 	
-	public void addMusica(String path, String nome, String artista, String duracao) {
-		this.model_2.addRow(new Object[]{path, nome, artista, duracao});
+	public void addMusica(Musica musica) {
+		int min = musica.getDuracao() / 60;
+		int sec = musica.getDuracao() % 60;
+		this.model_2.addRow(new Object[]{musica.getPath(), musica.getNome(), musica.getArtista(), min + ":" + sec});
 	}
 	
 	public void selecionaLinha(int linha) {

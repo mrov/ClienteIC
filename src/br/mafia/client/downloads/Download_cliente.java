@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
@@ -35,6 +37,7 @@ public class Download_cliente extends Thread{
 		try {
 			if (pause == 0 && !Thread.currentThread().isInterrupted()){
 				Socket socket = new Socket(this.cliente.getIPservidor(), Integer.parseInt(this.cliente.getPortaServidor()));
+				socket.setSoTimeout(1000);
 				OutputStream saida_t = socket.getOutputStream();
 				InputStream entrada_t = socket.getInputStream();
 				saida_t.write(49);
@@ -50,7 +53,7 @@ public class Download_cliente extends Thread{
 				byte[] buffer = new byte[1024*4];
 
 				this.guidownload.alertaErro("");
-				
+
 				OutputStream download;
 				if (byte_init == 0) download = new FileOutputStream(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath());  //está começando agora
 				else download = new FileOutputStream(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath(), true);           //continuando download
@@ -60,11 +63,11 @@ public class Download_cliente extends Thread{
 				long tempo_inicial = System.currentTimeMillis();
 				long ultimo_tempo_registrado = tempo_inicial;
 				long ultima_quantidade_de_bytes_ja_baixados = byte_init;
-//				int total_bytes=0;
+				//				int total_bytes=0;
 				while (!cancelado && pause == 0 && (bytes_receive = entrada_t.read(buffer)) > 0){ //recebe dados e grava no buffer
 					download.write(buffer, 0, bytes_receive); //envia dados do buffer para o arquivo
 					byte_init+=bytes_receive;
-//					System.out.println("T. Bytes recebidos: " + total_bytes);
+					//					System.out.println("T. Bytes recebidos: " + total_bytes);
 					//System.out.println(((double)byte_init/(double)this.musica.getTam())*100 + "%");
 					if((System.currentTimeMillis() - ultimo_tempo_registrado) > 500){ //utilizado para atualizar os dados da GUI a cada meio segundo
 						long velocidade = (long) ((byte_init-ultima_quantidade_de_bytes_ja_baixados)/((System.currentTimeMillis() - ultimo_tempo_registrado)/1000f));
@@ -100,55 +103,66 @@ public class Download_cliente extends Thread{
 				System.out.println("Download " + id_download + " cancelado");
 			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
+			System.out.println("Exceção cabo:");			
+			e.printStackTrace();
 			// TODO Auto-generated catch block
 			try {
-				for(int i = 0; i < 10; i++) {
-					this.guidownload.alertaErro("Erro no download, tentando reconectar em: " + (10 - i) + " segundos");
-					Thread.sleep(1000);
-				}
+//				if (e instanceof UnknownHostException) {
+					for(int i = 0; i < 5; i++) {
+//						this.guidownload.alertaErro("Erro no download, tentando reconectar em: " + (10 - i) + " segundos");
+						this.guidownload.alertaErro("Erro de conexão, tentando reconectar.");
+						Thread.sleep(1000);
+					}					
+//				} else{
+//					this.guidownload.alertaErro("O servidor está offline, aguarde um momento.");
+//					
+//				}
+				this.cliente.continuarDownload(this.id_download);
+
 			} catch (InterruptedException e1) {
+				System.out.println("Exceção 2");
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			if (e instanceof IOException){
-				System.out.println("Erro: ");
-				e.printStackTrace();
-			} else{
-				System.out.println("Temos problemas no download: ");
-				e.printStackTrace();
-			}
+			//			if (e instanceof IOException){
+			//				System.out.println("Erro: ");
+			//				e.printStackTrace();
+			//			} else{
+			//				System.out.println("Temos problemas no download: ");
+			//				e.printStackTrace();
+			//			}
 		}
 
 	}
 	private String tempo_restante_em_string(long s){
-        long mm = s/60;
-        s%=60;
-        long hh = mm/60;
-        mm%=60;
-        String retorno = s + "s restantes";
-        if(mm > 0)
-            retorno = mm + "mim e " + retorno;
-        if(hh>0)
-            retorno = hh + "h e " + retorno;
-        return  retorno;
-    }
+		long mm = s/60;
+		s%=60;
+		long hh = mm/60;
+		mm%=60;
+		String retorno = s + "s restantes";
+		if(mm > 0)
+			retorno = mm + "mim e " + retorno;
+		if(hh>0)
+			retorno = hh + "h e " + retorno;
+		return  retorno;
+	}
 	private String velocidade_em_string(long tam){
-        long k = tam/1024;
-        tam%=1024;
-        long m = k/1024;
-        k%=1024;
-        long g = m/1024;
-        m%=1024;
-        if(g>0){
-        	return g + "," + m + " GB/s";
-        }else if(m>0){
-        	return m + "," + k + " MB/s";
-        } else if(k>0){
-        	return k + "," + tam + " KB/s";
-        }
-        return  tam + "b/s";
-    }
+		long k = tam/1024;
+		tam%=1024;
+		long m = k/1024;
+		k%=1024;
+		long g = m/1024;
+		m%=1024;
+		if(g>0){
+			return g + "," + m + " GB/s";
+		}else if(m>0){
+			return m + "," + k + " MB/s";
+		} else if(k>0){
+			return k + "," + tam + " KB/s";
+		}
+		return  tam + "b/s";
+	}
 
 	public void pause(){
 		this.cliente.anunciaPause(this.id_download);
@@ -163,8 +177,12 @@ public class Download_cliente extends Thread{
 	public int getID(){
 		return id_download;
 	}
-	
+
 	public void cancelar() {
 		this.cancelado = true;
+	}
+	
+	public void zerarBitInicial(){
+		this.byte_init = 0;
 	}
 }
