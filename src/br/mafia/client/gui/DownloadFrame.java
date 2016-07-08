@@ -27,6 +27,8 @@ public class DownloadFrame implements JanelaDownload {
 	private JLabel lb_tempo_restante_s;
 	private JLabel lb_velo_download_kbps;
 	private JLabel lblNewLabel_1;
+	private JButton btnReiniciar;
+	private JButton btnCancelar;
 
 	/**
 	 * Launch the application.
@@ -52,7 +54,7 @@ public class DownloadFrame implements JanelaDownload {
 		btnPausar.setBounds(25, 268, 117, 25);
 		frame.getContentPane().add(btnPausar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(169, 268, 117, 25);
 		frame.getContentPane().add(btnCancelar);
 		
@@ -69,7 +71,7 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(lb_tempo_restante);
 		
 		lb_tempo_restante_s = new JLabel("0 s");
-		lb_tempo_restante_s.setBounds(267, 213, 101, 15);
+		lb_tempo_restante_s.setBounds(267, 213, 137, 15);
 		frame.getContentPane().add(lb_tempo_restante_s);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -83,7 +85,7 @@ public class DownloadFrame implements JanelaDownload {
 		this.lblNewLabel_1.setForeground(Color.RED);
 		frame.getContentPane().add(this.lblNewLabel_1);
 		
-		JButton btnReiniciar = new JButton("Reiniciar");
+		btnReiniciar = new JButton("Reiniciar");
 		btnReiniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reiniciarDownload();
@@ -115,8 +117,10 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(lblNewLabel);
 	}
 	public void finalizar_download(){
-		JOptionPane.showMessageDialog(this.frame, "Download finalizado com sucesso!", "Download", JOptionPane.INFORMATION_MESSAGE);
 		this.btnPausar.setEnabled(false);
+		this.btnReiniciar.setEnabled(false);
+		this.btnCancelar.setText("Pronto!!");
+		JOptionPane.showMessageDialog(this.frame, "Download finalizado com sucesso!", "Download", JOptionPane.INFORMATION_MESSAGE);
 		this.progressBar.setString("100.0%");
 	}
 	
@@ -142,6 +146,11 @@ public class DownloadFrame implements JanelaDownload {
 	}
 	
 	public void cancelarDownload() {
+		if (this.pausado) {
+			this.pausado = false;
+			this.btnPausar.setText("Pause");
+			this.cliente.continuarDownload(this.id_download);
+		}
 		this.cliente.cancelarDownload(this.id_download);
 		this.frame.dispose();
 	}

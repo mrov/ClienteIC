@@ -142,7 +142,7 @@ public class Download_cliente extends Thread{
 		mm%=60;
 		String retorno = s + "s restantes";
 		if(mm > 0)
-			retorno = mm + "mim e " + retorno;
+			retorno = mm + "min e " + retorno;
 		if(hh>0)
 			retorno = hh + "h e " + retorno;
 		return  retorno;

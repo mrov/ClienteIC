@@ -237,6 +237,7 @@ public class LogadoFrame implements JanelaPlayer {
 		btnDesconectar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				desconectar();
+				mp.stop();
 			}
 		});
 		btnDesconectar.setBounds(582, 26, 141, 25);
