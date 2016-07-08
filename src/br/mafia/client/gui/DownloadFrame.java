@@ -5,9 +5,11 @@ import javax.swing.JProgressBar;
 
 import br.mafia.client.downloads.JanelaDownload;
 import br.mafia.client.musicas.Musica;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -47,11 +49,11 @@ public class DownloadFrame implements JanelaDownload {
 				pausadespausa();
 			}
 		});
-		btnPausar.setBounds(69, 268, 117, 25);
+		btnPausar.setBounds(25, 268, 117, 25);
 		frame.getContentPane().add(btnPausar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(235, 268, 117, 25);
+		btnCancelar.setBounds(162, 268, 117, 25);
 		frame.getContentPane().add(btnCancelar);
 		
 		JLabel lb_velocidade_download = new JLabel("Velocidade Download:");
@@ -59,7 +61,7 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(lb_velocidade_download);
 		
 		lb_velo_download_kbps = new JLabel("0 KB/s");
-		lb_velo_download_kbps.setBounds(267, 237, 70, 15);
+		lb_velo_download_kbps.setBounds(267, 237, 101, 15);
 		frame.getContentPane().add(lb_velo_download_kbps);
 		
 		JLabel lb_tempo_restante = new JLabel("Tempo Restante: ");
@@ -67,7 +69,7 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(lb_tempo_restante);
 		
 		lb_tempo_restante_s = new JLabel("0 s");
-		lb_tempo_restante_s.setBounds(267, 213, 70, 15);
+		lb_tempo_restante_s.setBounds(267, 213, 101, 15);
 		frame.getContentPane().add(lb_tempo_restante_s);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -80,6 +82,15 @@ public class DownloadFrame implements JanelaDownload {
 		this.lblNewLabel_1.setBounds(68, 276, 322, 65);
 		this.lblNewLabel_1.setForeground(Color.RED);
 		frame.getContentPane().add(this.lblNewLabel_1);
+		
+		JButton btnReiniciar = new JButton("Reiniciar");
+		btnReiniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				reiniciarDownload();
+			}
+		});
+		btnReiniciar.setBounds(303, 268, 101, 25);
+		frame.getContentPane().add(btnReiniciar);
 		this.id_download = this.cliente.iniciarDownload(musica, this);
 	}
 
@@ -130,6 +141,20 @@ public class DownloadFrame implements JanelaDownload {
 	public void cancelarDownload() {
 		this.cliente.cancelarDownload(this.id_download);
 		this.frame.dispose();
+	}
+	
+	public void reiniciarDownload(){
+		this.cliente.pausarDownload(this.id_download);
+		try {
+			Thread.currentThread().sleep(300);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.cliente.zerarBitInicial(this.id_download);
+		
+		this.cliente.continuarDownload(this.id_download);
+		this.lblNewLabel.setText("<html>Baixando " + this.musica.getPath() + " em " + this.cliente.getPastaMusicas() + "</html>");		
 	}
 	
 	public void alertaErro(String erro) {

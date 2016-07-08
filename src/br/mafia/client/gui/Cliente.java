@@ -82,6 +82,10 @@ public class Cliente {
 		return this.downloads.iniciarDownload(musica, guidownload);
 	}
 	
+	public void zerarBitInicial(int id){
+		this.downloads.zerarBitInicial(id);
+	}
+	
 	public void pausarDownload(int id) {
 		this.downloads.pauseDownload(id);
 	}
