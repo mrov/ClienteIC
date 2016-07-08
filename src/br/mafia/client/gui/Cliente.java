@@ -26,11 +26,11 @@ public class Cliente {
 	
 	// { <ROOT>
 	
-	public void cadastrar(String usuario, String senha) throws UsuarioJaCadastradoException {
+	public void cadastrar(String usuario, String senha) throws UsuarioJaCadastradoException, Exception {
 		this.root.cadastro(usuario, senha);
 	}
 	
-	public void login(String usuario, String senha) throws FalhaLoginException {
+	public void login(String usuario, String senha) throws FalhaLoginException, Exception {
 		this.root.login(usuario, senha);
 	}
 	

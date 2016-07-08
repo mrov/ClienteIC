@@ -30,6 +30,8 @@ public class testes {
 		} catch (FalhaLoginException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 }

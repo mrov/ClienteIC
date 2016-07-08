@@ -256,11 +256,11 @@ public class LogadoFrame {
 		    public void mouseClicked(java.awt.event.MouseEvent evt) {
 		        int row = table_2.rowAtPoint(evt.getPoint());
 		        int col = table_2.columnAtPoint(evt.getPoint());
-		        if (evt.getClickCount() == 1) {
-		        	if (row >= 0 && col >= 0) {
-		        		selecionaLinha(row);
-		        	}
-		        } 
+//		        if (evt.getClickCount() == 1) {
+//		        	if (row >= 0 && col >= 0) {
+//		        		selecionaLinha(row);
+//		        	}
+//		        } 
 		        if(evt.getClickCount() == 2) {
 		        	if (row >= 0 && col >= 0) {
 		        		selecionaLinha(row);
@@ -280,6 +280,7 @@ public class LogadoFrame {
 		
 		JScrollPane scrollPane_2 = new JScrollPane(table_2);
 		panel_3.add(scrollPane_2);
+		
 	}
 	
 	public void desconectar() {
@@ -418,7 +419,8 @@ public class LogadoFrame {
 			this.linhaselecionada--;
 			if(this.linhaselecionada == -1) this.linhaselecionada = linhastabela - 1;
 			table_2.setRowSelectionInterval(this.linhaselecionada, this.linhaselecionada);
-			this.tocarMusica();
+			if(!mp.isPaused())
+				this.tocarMusica();
 		}
 	}
 	
@@ -428,7 +430,8 @@ public class LogadoFrame {
 		if(linhastabela > 0) {
 			this.linhaselecionada = (this.linhaselecionada + 1) % linhastabela;
 			table_2.setRowSelectionInterval(this.linhaselecionada, this.linhaselecionada);
-			this.tocarMusica();
+			if(!mp.isPaused())
+				this.tocarMusica();
 		}
 	}
 	
@@ -445,5 +448,8 @@ public class LogadoFrame {
 		this.mp.pause();
 		btnPause.setEnabled(false);
 		btnPlay.setEnabled(true);
+		btnStop.setEnabled(true);
+		btnBack.setEnabled(true);
+		btnFoward.setEnabled(true);
 	}
 }

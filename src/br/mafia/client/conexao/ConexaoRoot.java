@@ -3,6 +3,7 @@ package br.mafia.client.conexao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class ConexaoRoot {
 		this.cliente = cliente;
 	}
 	
-	public void cadastro(String usuario, String senha) throws UsuarioJaCadastradoException {
+	public void cadastro(String usuario, String senha) throws UsuarioJaCadastradoException,Exception {
 		try {
 			this.socket = new Socket(this.cliente.getIPservidor(), Integer.parseInt(this.cliente.getPortaServidor()));
 			this.saida = this.socket.getOutputStream();
@@ -44,13 +45,10 @@ public class ConexaoRoot {
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	
-	public void login(String usuario, String senha) throws FalhaLoginException {
+	public void login(String usuario, String senha) throws FalhaLoginException, Exception {
 		try {
 			this.socket = new Socket(this.cliente.getIPservidor(), Integer.parseInt(this.cliente.getPortaServidor()));
 			this.saida = this.socket.getOutputStream();
@@ -65,14 +63,12 @@ public class ConexaoRoot {
 			if(r != 16) {
 				throw new FalhaLoginException();
 			}
+			System.out.println("r == 16");
 			new Thread(new Ping(this.socket)).start();
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

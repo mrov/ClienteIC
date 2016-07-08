@@ -51,7 +51,7 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(btnPausar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(235, 268, 117, 25);
+		btnCancelar.setBounds(220, 268, 117, 25);
 		frame.getContentPane().add(btnCancelar);
 		
 		JLabel lb_velocidade_download = new JLabel("Velocidade Download:");
@@ -74,7 +74,6 @@ public class DownloadFrame implements JanelaDownload {
 				cancelarDownload();
 			}
 		});
-		btnCancelar.setBounds(203, 199, 117, 25);
 		frame.getContentPane().add(btnCancelar);
 		
 		this.lblNewLabel_1 = new JLabel("");
@@ -97,6 +96,7 @@ public class DownloadFrame implements JanelaDownload {
 		this.progressBar.setBounds(46, 89, 322, 54);
 		this.progressBar.setMinimum(0);
 		this.progressBar.setMaximum(1000);
+		progressBar.setStringPainted(true);
 		frame.getContentPane().add(this.progressBar);
 		
 		lblNewLabel = new JLabel("New label");
@@ -105,13 +105,15 @@ public class DownloadFrame implements JanelaDownload {
 	}
 	public void finalizar_download(){
 		JOptionPane.showMessageDialog(this.frame, "Download finalizado com sucesso!", "Download", JOptionPane.INFORMATION_MESSAGE);
-		btnPausar.setEnabled(false);
+		this.btnPausar.setEnabled(false);
+		this.progressBar.setString("100.0%");
 	}
 	
 	public void setStatusDownload(int porcentagem, String tempo_restante, String velocidade) {
 		this.progressBar.setValue(porcentagem);
 		this.lb_tempo_restante_s.setText(tempo_restante);
 		this.lb_velo_download_kbps.setText(velocidade);
+		this.progressBar.setString(porcentagem/10f + "%");
 	}
 	
 	public void pausadespausa() {

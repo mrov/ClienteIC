@@ -73,20 +73,23 @@ public class Download_cliente extends Thread{
 						ultima_quantidade_de_bytes_ja_baixados = byte_init;
 					}
 				}
-				this.guidownload.setStatusDownload(1000, "0 s","0 KB/s");
 				if (cancelado){
 					System.out.println("Download " + id_download + " cancelado");
 					File arquivo = new File(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath());
+					this.guidownload.setStatusDownload((int)((float)byte_init/tamanho_arquivo*1000), "0 s", "0 KB/s");
 					arquivo.delete();
 				} else if (pause == 0) {
 					System.out.println("Download " + id_download + " concluído");
+					this.guidownload.setStatusDownload((int)((float)byte_init/tamanho_arquivo*1000), "0 s", "0 KB/s");
 					this.cliente.addMusica(this.musica.getId(), this.musica.getNome(), this.musica.getArtista(), this.musica.getDuracao(), this.musica.getPath(), this.musica.getTam());
 				}
 				else {
+					this.guidownload.setStatusDownload((int)((float)byte_init/tamanho_arquivo*1000), "0 s", "0 KB/s");
 					System.out.println("Download " + id_download + " pausado em " + byte_init);
 				}
 				if(byte_init>=tamanho_arquivo){
 					this.guidownload.finalizar_download();
+					this.guidownload.setStatusDownload(1000, "0 s","0 KB/s");
 				}
 
 				socket.close();

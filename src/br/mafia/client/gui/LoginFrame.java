@@ -2,6 +2,7 @@ package br.mafia.client.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.ConnectException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -82,6 +83,11 @@ public class LoginFrame {
 			new LogadoFrame(this.cliente, this);
 		} catch (FalhaLoginException e) {
 			JOptionPane.showMessageDialog(frame, "Usuário ou senha incorretos", "Erro", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			if(e instanceof ConnectException){
+				JOptionPane.showMessageDialog(frame, "Verifique a sua conexão com a internet", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+			// TODO: handle exception
 		}
 	}
 	

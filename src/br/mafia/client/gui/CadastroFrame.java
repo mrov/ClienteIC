@@ -2,6 +2,7 @@ package br.mafia.client.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.ConnectException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -80,6 +81,10 @@ public class CadastroFrame {
 			this.frame.setVisible(false);
 		} catch (UsuarioJaCadastradoException e) {
 			JOptionPane.showMessageDialog(frame, "Usuário já cadastraro", "Erro", JOptionPane.ERROR_MESSAGE);
+		}catch (Exception e) {
+			if(e instanceof ConnectException){
+				JOptionPane.showMessageDialog(frame, "Verifique a sua conexão com a internet", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 

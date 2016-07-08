@@ -113,4 +113,8 @@ public class MusicasController {
 		}
 		return musica;
 	}
+	public ArrayList<Musica> atualizar_repositorio(){
+		lerXLM();
+		return getMusicasBaixadas();
+	}
 }
