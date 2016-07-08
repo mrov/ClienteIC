@@ -53,7 +53,7 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(btnPausar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(220, 268, 117, 25);
+		btnCancelar.setBounds(169, 268, 117, 25);
 		frame.getContentPane().add(btnCancelar);
 		
 		JLabel lb_velocidade_download = new JLabel("Velocidade Download:");
@@ -154,6 +154,8 @@ public class DownloadFrame implements JanelaDownload {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.btnPausar.setText("Pause");
+		this.pausado = false;
 		this.cliente.zerarBitInicial(this.id_download);
 		
 		this.cliente.continuarDownload(this.id_download);

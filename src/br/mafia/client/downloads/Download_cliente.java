@@ -50,7 +50,7 @@ public class Download_cliente extends Thread{
 				System.out.println("Download iniciado em " + byte_init + " bytes");
 				System.out.println("Vai salvar em: " + this.cliente.getPastaMusicas() + File.separator + this.musica.getPath());
 				int bytes_receive=0;
-				byte[] buffer = new byte[1024*4];
+				byte[] buffer = new byte[1024];
 
 				this.guidownload.alertaErro("");
 
@@ -69,7 +69,7 @@ public class Download_cliente extends Thread{
 					byte_init+=bytes_receive;
 					//					System.out.println("T. Bytes recebidos: " + total_bytes);
 					//System.out.println(((double)byte_init/(double)this.musica.getTam())*100 + "%");
-					if((System.currentTimeMillis() - ultimo_tempo_registrado) > 500){ //utilizado para atualizar os dados da GUI a cada meio segundo
+					if((System.currentTimeMillis() - ultimo_tempo_registrado) > 200){ //utilizado para atualizar os dados da GUI a cada meio segundo
 						long velocidade = (long) ((byte_init-ultima_quantidade_de_bytes_ja_baixados)/((System.currentTimeMillis() - ultimo_tempo_registrado)/1000f));
 						this.guidownload.setStatusDownload((int)((float)byte_init/tamanho_arquivo*1000), tempo_restante_em_string((long)((tamanho_arquivo-byte_init)/(float)(velocidade|1))), velocidade_em_string(velocidade));
 						ultimo_tempo_registrado = System.currentTimeMillis();
