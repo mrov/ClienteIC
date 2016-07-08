@@ -5,3 +5,7 @@ musicas.xml~
 mafia.conf
 mafia.conf~
 *.class
+*.mp3
+*.mp4
+*.wma
+*.m4a

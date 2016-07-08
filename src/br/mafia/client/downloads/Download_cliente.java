@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
+
 import br.mafia.client.gui.Cliente;
 import br.mafia.client.musicas.Musica;
 
@@ -51,14 +53,25 @@ public class Download_cliente extends Thread{
 				if (byte_init == 0) download = new FileOutputStream(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath());  //está começando agora
 				else download = new FileOutputStream(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath(), true);           //continuando download
 
+
+				long tamanho_arquivo = this.musica.getTam();
+				long tempo_inicial = System.currentTimeMillis();
+				long ultimo_tempo_registrado = tempo_inicial;
+				long ultima_quantidade_de_bytes_ja_baixados = byte_init;
 //				int total_bytes=0;
 				while (!cancelado && pause == 0 && (bytes_receive = entrada_t.read(buffer)) > 0){ //recebe dados e grava no buffer
 					download.write(buffer, 0, bytes_receive); //envia dados do buffer para o arquivo
 					byte_init+=bytes_receive;
 //					System.out.println("T. Bytes recebidos: " + total_bytes);
 					//System.out.println(((double)byte_init/(double)this.musica.getTam())*100 + "%");
-					this.guidownload.setStatusDownload((int)(((double)byte_init/(double)this.musica.getTam())*100));
+					if((System.currentTimeMillis() - ultimo_tempo_registrado) > 500){ //utilizado para atualizar os dados da GUI a cada meio segundo
+						long velocidade = (long) ((byte_init-ultima_quantidade_de_bytes_ja_baixados)/((System.currentTimeMillis() - ultimo_tempo_registrado)/1000f));
+						this.guidownload.setStatusDownload((int)((float)byte_init/tamanho_arquivo*1000), tempo_restante_em_string((long)((tamanho_arquivo-byte_init)/(float)(velocidade|1))), velocidade_em_string(velocidade));
+						ultimo_tempo_registrado = System.currentTimeMillis();
+						ultima_quantidade_de_bytes_ja_baixados = byte_init;
+					}
 				}
+				this.guidownload.setStatusDownload(1000, "0 s","0 KB/s");
 				if (cancelado){
 					System.out.println("Download " + id_download + " cancelado");
 					File arquivo = new File(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath());
@@ -69,6 +82,9 @@ public class Download_cliente extends Thread{
 				}
 				else {
 					System.out.println("Download " + id_download + " pausado em " + byte_init);
+				}
+				if(byte_init>=tamanho_arquivo){
+					this.guidownload.finalizar_download();
 				}
 
 				socket.close();
@@ -91,6 +107,34 @@ public class Download_cliente extends Thread{
 		}
 
 	}
+	private String tempo_restante_em_string(long s){
+        long mm = s/60;
+        s%=60;
+        long hh = mm/60;
+        mm%=60;
+        String retorno = s + "s restantes";
+        if(mm > 0)
+            retorno = mm + "mim e " + retorno;
+        if(hh>0)
+            retorno = hh + "h e " + retorno;
+        return  retorno;
+    }
+	private String velocidade_em_string(long tam){
+        long k = tam/1024;
+        tam%=1024;
+        long m = k/1024;
+        k%=1024;
+        long g = m/1024;
+        m%=1024;
+        if(g>0){
+        	return g + "," + m + " GB/s";
+        }else if(m>0){
+        	return m + "," + k + " MB/s";
+        } else if(k>0){
+        	return k + "," + tam + " KB/s";
+        }
+        return  tam + "b/s";
+    }
 
 	public void pause(){
 		this.cliente.anunciaPause(this.id_download);
