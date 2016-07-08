@@ -86,6 +86,7 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(this.lblNewLabel_1);
 		
 		btnReiniciar = new JButton("Reiniciar");
+		btnReiniciar.setVisible(false);btnReiniciar.setEnabled(false);
 		btnReiniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reiniciarDownload();
