@@ -137,7 +137,7 @@ public class LogadoFrame implements JanelaPlayer {
 		
 		table = new JTable(this.model);
 		table.setFillsViewportHeight(true);
-		table.setAutoCreateRowSorter(true);
+		table.setAutoCreateRowSorter(false);
 		
 		
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
