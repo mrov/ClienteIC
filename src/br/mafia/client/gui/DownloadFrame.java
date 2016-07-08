@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class DownloadFrame implements JanelaDownload {
 
@@ -23,6 +24,7 @@ public class DownloadFrame implements JanelaDownload {
 	private JButton btnPausar;
 	private JLabel lb_tempo_restante_s;
 	private JLabel lb_velo_download_kbps;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -37,7 +39,7 @@ public class DownloadFrame implements JanelaDownload {
 		initialize();
 		this.frame.setVisible(true);
 		this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.lblNewLabel.setText("Baixando " + this.musica.getPath() + " em " + this.cliente.getPastaMusicas());
+		this.lblNewLabel.setText("<html>Baixando " + this.musica.getPath() + " em " + this.cliente.getPastaMusicas() + "</html>");
 		
 		btnPausar = new JButton("Pausar");
 		btnPausar.addActionListener(new ActionListener() {
@@ -67,6 +69,18 @@ public class DownloadFrame implements JanelaDownload {
 		lb_tempo_restante_s = new JLabel("0 s");
 		lb_tempo_restante_s.setBounds(267, 213, 70, 15);
 		frame.getContentPane().add(lb_tempo_restante_s);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancelarDownload();
+			}
+		});
+		btnCancelar.setBounds(203, 199, 117, 25);
+		frame.getContentPane().add(btnCancelar);
+		
+		this.lblNewLabel_1 = new JLabel("");
+		this.lblNewLabel_1.setBounds(68, 276, 322, 65);
+		this.lblNewLabel_1.setForeground(Color.RED);
+		frame.getContentPane().add(this.lblNewLabel_1);
 		this.id_download = this.cliente.iniciarDownload(musica, this);
 	}
 
@@ -105,10 +119,21 @@ public class DownloadFrame implements JanelaDownload {
 			this.btnPausar.setText("Pause");
 			this.pausado = false;
 			this.cliente.continuarDownload(this.id_download);
+			this.lblNewLabel.setText("<html>Baixando " + this.musica.getPath() + " em " + this.cliente.getPastaMusicas() + "</html>");
 		} else {
 			this.btnPausar.setText("Continuar");
 			this.pausado = true;
 			this.cliente.pausarDownload(this.id_download);
+			this.lblNewLabel.setText("Pausado");
 		}
+	}
+	
+	public void cancelarDownload() {
+		this.cliente.cancelarDownload(this.id_download);
+		this.frame.dispose();
+	}
+	
+	public void alertaErro(String erro) {
+		this.lblNewLabel.setText("<html>" + erro + "<html>");
 	}
 }

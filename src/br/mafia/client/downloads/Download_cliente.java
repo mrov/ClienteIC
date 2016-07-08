@@ -49,6 +49,8 @@ public class Download_cliente extends Thread{
 				int bytes_receive=0;
 				byte[] buffer = new byte[1024*4];
 
+				this.guidownload.alertaErro("");
+				
 				OutputStream download;
 				if (byte_init == 0) download = new FileOutputStream(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath());  //está começando agora
 				else download = new FileOutputStream(this.cliente.getPastaMusicas() + File.separator + this.musica.getPath(), true);           //continuando download
@@ -97,6 +99,15 @@ public class Download_cliente extends Thread{
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			try {
+				for(int i = 0; i < 10; i++) {
+					this.guidownload.alertaErro("Erro no download, tentando reconectar em: " + (10 - i) + " segundos");
+					Thread.sleep(1000);
+				}
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			if (e instanceof IOException){
 				System.out.println("Erro: ");
 				e.printStackTrace();
