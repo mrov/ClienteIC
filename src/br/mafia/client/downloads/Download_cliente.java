@@ -178,4 +178,8 @@ public class Download_cliente extends Thread{
 	public void cancelar() {
 		this.cancelado = true;
 	}
+	
+	public void zerarBitInicial(){
+		this.byte_init = 0;
+	}
 }

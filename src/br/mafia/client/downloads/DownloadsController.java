@@ -30,6 +30,10 @@ public class DownloadsController {
 		new Thread(this.getDownload(id)).start();
 	}
 	
+	public void zerarBitInicial(int id){
+		this.getDownload(id).zerarBitInicial();
+	}
+	
 	public void cancelarDownload(int id) {
 		this.getDownload(id).cancelar();
 	}
