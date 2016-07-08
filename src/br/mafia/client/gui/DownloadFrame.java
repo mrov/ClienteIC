@@ -71,7 +71,7 @@ public class DownloadFrame implements JanelaDownload {
 		frame.getContentPane().add(lb_tempo_restante);
 		
 		lb_tempo_restante_s = new JLabel("0 s");
-		lb_tempo_restante_s.setBounds(267, 213, 101, 15);
+		lb_tempo_restante_s.setBounds(267, 213, 137, 15);
 		frame.getContentPane().add(lb_tempo_restante_s);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -146,6 +146,11 @@ public class DownloadFrame implements JanelaDownload {
 	}
 	
 	public void cancelarDownload() {
+		if (this.pausado) {
+			this.pausado = false;
+			this.btnPausar.setText("Pause");
+			this.cliente.continuarDownload(this.id_download);
+		}
 		this.cliente.cancelarDownload(this.id_download);
 		this.frame.dispose();
 	}
