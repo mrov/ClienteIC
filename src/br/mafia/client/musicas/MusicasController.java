@@ -17,11 +17,13 @@ import org.jdom2.output.XMLOutputter;
 public class MusicasController {
 	private String arquivoxml;
 	private ArrayList<Musica> repmusicas;
+	private JanelaPlayer janela;
 	
 	public MusicasController(String arquivoxml) {
 		this.repmusicas = new ArrayList();
 		this.arquivoxml = arquivoxml;
 		this.lerXLM();
+		this.janela = null;
 	}
 	
 	private void salvarXML() {
@@ -101,6 +103,7 @@ public class MusicasController {
 	
 	public void addMusica(int id, String nome, String artista, int duracao, String path,long tam) {
 		this.repmusicas.add(new Musica(id, nome, artista, duracao, path, tam));
+		this.janela.addMusica(path, nome, artista, String.valueOf(duracao));
 		this.salvarXML();
 	}
 	
@@ -112,5 +115,9 @@ public class MusicasController {
 			if (atual.getId() == id) musica = atual;
 		}
 		return musica;
+	}
+	
+	public void setJanelaPlayer(JanelaPlayer janela) {
+		this.janela = janela;
 	}
 }

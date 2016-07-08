@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -17,11 +18,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import br.mafia.client.musicas.JanelaPlayer;
 import br.mafia.client.musicas.Musica;
 import jaco.mp3.player.MP3Player;
-import javax.swing.ImageIcon;
 
-public class LogadoFrame {
+public class LogadoFrame implements JanelaPlayer {
 
 	private JFrame frame;
 	private Cliente cliente;
@@ -67,7 +68,7 @@ public class LogadoFrame {
 		this.btnPause.setEnabled(false);
 		this.btnStop.setEnabled(false);
 		this.btnFoward.setEnabled(false);
-		
+		this.cliente.setJanelaPlayer(this);
 	}
 
 	/**

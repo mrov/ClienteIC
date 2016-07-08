@@ -7,6 +7,7 @@ import br.mafia.client.conexao.FalhaLoginException;
 import br.mafia.client.conexao.UsuarioJaCadastradoException;
 import br.mafia.client.downloads.DownloadsController;
 import br.mafia.client.downloads.JanelaDownload;
+import br.mafia.client.musicas.JanelaPlayer;
 import br.mafia.client.musicas.Musica;
 import br.mafia.client.musicas.MusicasController;
 import br.mafia.client.util.Config;
@@ -72,6 +73,10 @@ public class Cliente {
 	
 	public Musica getMusica(int id) {
 		return this.musicas.getMusica(id);
+	}
+	
+	public void setJanelaPlayer(JanelaPlayer janela) {
+		this.musicas.setJanelaPlayer(janela);
 	}
 	
 	// } </MUSICAS>
